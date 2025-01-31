@@ -35,7 +35,7 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
 ## **Instalasi**
 1. Clone repository ini:
    ```bash
-   git clone https://github.com/username/face-recognition-api.git
+   git clone https://github.com/rikurunico/face-recog-rest.git
    cd face-recognition-api
    ```
 
