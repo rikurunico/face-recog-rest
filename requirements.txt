@@ -1,0 +1,6 @@
+cmake==3.25.2
+dlib==19.24.2
+Flask
+face_recognition
+numpy==1.25.1
+opencv-python
