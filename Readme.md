@@ -52,7 +52,7 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
 
 4. Jalankan aplikasi:
    ```bash
-   python app.py
+   python web.py
    ```
 
    Aplikasi akan berjalan di `http://127.0.0.1:5000`.
@@ -65,8 +65,10 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
 │
 ├── /cropped_faces          # Folder untuk menyimpan gambar wajah yang di-crop
 ├── face_encodings.pkl      # File untuk menyimpan encoding wajah
-├── app.py                  # File utama aplikasi
+├── simple.py               # Untuk Testing dan Debugging
+├── web.py                  # File untuk menjalankan aplikasi
 ├── requirements.txt        # Dependencies
+├── /postman                # Collection Postman
 └── README.md               # Dokumentasi
 ```
 
