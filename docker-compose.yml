@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  face-recognition-api:
+    build: .
+    image: face-recognition-api:latest
+    container_name: face-recognition-api
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./cropped_faces:/app/cropped_faces
+      - face_encodings:/app/face_encodings
+    environment:
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+      - WORKERS=4
+      - GUNICORN_CMD_ARGS="--access-logfile - --error-logfile - --timeout 120"
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  face_encodings:
+    driver: local

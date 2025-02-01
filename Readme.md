@@ -121,8 +121,6 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
    ```
 4. Gambar wajah yang di-crop akan disimpan di folder `cropped_faces`.
 
----
-
 ### **2. Pengenalan Wajah**
 1. Siapkan gambar baru (misal: `testing.jpg`).
 2. Gunakan Postman atau curl untuk mengunggah gambar:
@@ -170,4 +168,33 @@ Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
 ---
 
-Dengan README ini, Anda dapat dengan mudah memahami, menginstal, dan menggunakan aplikasi Face Recognition API. Selamat mencoba! 🚀
+Dengan README ini, Anda dapat dengan mudah memahami, menginstal, dan menggunakan aplikasi Face Recognition API. Selamat mencoba! 
+
+## Pengenalan Wajah API
+
+Aplikasi ini adalah API pengenalan wajah yang dibangun menggunakan Flask dan dapat di-deploy menggunakan Docker.
+
+## Persyaratan
+- Python 3.9
+- Docker
+- Docker Compose
+
+## Instalasi
+1. Clone repositori ini:
+   ```bash
+   git clone <URL_REPOSITORI>
+   cd face-recognition-gpu
+   ```
+2. Bangun dan jalankan kontainer:
+   ```bash
+   docker-compose up -d
+   ```
+3. Akses API di `http://localhost:5000`
+
+## Penggunaan
+- **Registrasi Wajah**: Kirim gambar wajah ke endpoint `/register` menggunakan metode POST.
+- **Pengenalan Wajah**: Kirim gambar ke endpoint `/recognize` untuk mengenali wajah.
+
+## Catatan
+- Aplikasi ini menggunakan Gunicorn sebagai server WSGI untuk produksi.
+- Pastikan untuk menggunakan server produksi untuk aplikasi yang di-deploy.

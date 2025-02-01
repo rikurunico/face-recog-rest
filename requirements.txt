@@ -4,3 +4,4 @@ Flask
 face_recognition
 numpy==1.25.1
 opencv-python
+gunicorn==21.2.0
