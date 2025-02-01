@@ -1,19 +1,20 @@
 # **Face Recognition API**
 
-Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenalan wajah** menggunakan library `face_recognition`. Aplikasi ini memungkinkan pengguna untuk mengunggah gambar wajah, mendaftarkannya, dan kemudian mengenali wajah tersebut dari gambar baru.
+API ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenalan wajah** menggunakan library `face_recognition`. Aplikasi ini memungkinkan pengguna untuk mendaftarkan wajah dan mengenali wajah dari gambar baru.
 
 ---
 
 ## **Fitur**
+
 1. **Registrasi Wajah**:
    - Unggah gambar wajah.
-   - Deteksi dan crop wajah.
+   - Deteksi dan crop wajah dari gambar yang diunggah.
    - Simpan gambar wajah yang di-crop dan encoding wajah.
 
 2. **Pengenalan Wajah**:
    - Unggah gambar baru.
    - Deteksi wajah dan bandingkan dengan wajah yang sudah terdaftar.
-   - Tampilkan nama wajah yang dikenali beserta confidence level.
+   - Tampilkan nama wajah yang dikenali beserta tingkat kepercayaan (confidence level).
 
 3. **Penyimpanan Data**:
    - Gambar wajah yang di-crop disimpan dalam folder `cropped_faces`.
@@ -22,6 +23,7 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
 ---
 
 ## **Persyaratan**
+
 1. **Python 3.7+**
 2. Library yang diperlukan:
    - `flask`
@@ -29,46 +31,43 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
    - `opencv-python`
    - `numpy`
    - `pickle`
+3. **Docker & Docker Compose**
 
 ---
 
-## **Instalasi**
-1. Clone repository ini:
+## **Instalasi dengan Docker Compose**
+
+1. **Clone repositori**
    ```bash
    git clone https://github.com/rikurunico/face-recog-rest.git
    cd face-recognition-api
    ```
 
-2. Buat virtual environment (opsional):
+2. **Bangun dan Jalankan Kontainer**
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # Untuk Windows: venv\Scripts\activate
+   docker-compose up -d --build
    ```
+   Aplikasi akan berjalan di `http://localhost:5000`.
 
-3. Install dependencies:
+3. **Menghentikan Kontainer**
    ```bash
-   pip install -r requirements.txt
+   docker-compose down
    ```
-
-4. Jalankan aplikasi:
-   ```bash
-   python web.py
-   ```
-
-   Aplikasi akan berjalan di `http://127.0.0.1:5000`.
 
 ---
 
 ## **Struktur Proyek**
-```
+
+```plaintext
 /face-recognition-api
-│
 ├── /cropped_faces          # Folder untuk menyimpan gambar wajah yang di-crop
 ├── face_encodings.pkl      # File untuk menyimpan encoding wajah
-├── simple.py               # Untuk Testing dan Debugging
-├── web.py                  # File untuk menjalankan aplikasi
-├── requirements.txt        # Dependencies
-├── /postman                # Collection Postman
+├── simple.py               # File untuk testing dan debugging
+├── web.py                  # File utama untuk menjalankan aplikasi
+├── requirements.txt        # File daftar dependensi
+├── docker-compose.yml      # File konfigurasi Docker Compose
+├── Dockerfile              # File konfigurasi Docker
+├── /postman                # Koleksi Postman untuk testing API
 └── README.md               # Dokumentasi
 ```
 
@@ -107,12 +106,12 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
 ## **Cara Menggunakan**
 
 ### **1. Registrasi Wajah**
-1. Siapkan gambar wajah (misal: `training.jpg`).
-2. Gunakan Postman atau curl untuk mengunggah gambar:
+1. Siapkan gambar wajah, misalnya `training.jpg`.
+2. Gunakan Postman atau `curl` untuk mengunggah gambar:
    ```bash
-   curl -X POST -F "file=@training.jpg" http://127.0.0.1:5000/register
+   curl -X POST -F "file=@training.jpg" http://localhost:5000/register
    ```
-3. Jika berhasil, response akan menampilkan nama file yang disimpan:
+3. Jika berhasil, respons akan menampilkan nama file yang disimpan:
    ```json
    {
      "message": "Face registered successfully",
@@ -122,12 +121,12 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
 4. Gambar wajah yang di-crop akan disimpan di folder `cropped_faces`.
 
 ### **2. Pengenalan Wajah**
-1. Siapkan gambar baru (misal: `testing.jpg`).
-2. Gunakan Postman atau curl untuk mengunggah gambar:
+1. Siapkan gambar baru, misalnya `testing.jpg`.
+2. Gunakan Postman atau `curl` untuk mengunggah gambar:
    ```bash
-   curl -X POST -F "file=@testing.jpg" http://127.0.0.1:5000/recognize
+   curl -X POST -F "file=@testing.jpg" http://localhost:5000/recognize
    ```
-3. Jika wajah dikenali, response akan menampilkan nama dan confidence level:
+3. Jika wajah dikenali, respons akan menampilkan nama dan tingkat kepercayaan:
    ```json
    {
      "recognized_faces": [
@@ -142,59 +141,24 @@ Aplikasi ini adalah REST API sederhana untuk **registrasi wajah** dan **pengenal
 ---
 
 ## **Testing dengan Postman**
-1. Import Collection Postman dari file `Face Recognition API.postman_collection.json`.
+
+1. Import koleksi Postman dari file `postman\Face Recognition API.postman_collection.json`.
 2. Jalankan request **Register Face** untuk mendaftarkan wajah.
 3. Jalankan request **Recognize Face** untuk mengenali wajah.
 
 ---
 
-## **Contoh Gambar**
-- **Gambar untuk Registrasi**: `training.jpg`
-- **Gambar untuk Pengenalan**: `testing.jpg`
-
-Pastikan gambar memiliki wajah yang jelas dan menghadap ke depan.
-
----
-
 ## **Catatan**
+
 - Aplikasi ini hanya untuk tujuan pembelajaran dan pengembangan.
-- Untuk penggunaan produksi, tambahkan fitur keamanan seperti autentikasi dan validasi input.
-- Pastikan library `face_recognition` terinstall dengan benar. Jika mengalami masalah, ikuti panduan instalasi di [dokumentasi resmi](https://github.com/ageitgey/face_recognition).
+- Tambahkan fitur keamanan seperti autentikasi dan validasi input untuk penggunaan di produksi.
+- Jika mengalami masalah dengan library `face_recognition`, ikuti panduan instalasi di [dokumentasi resmi](https://github.com/ageitgey/face_recognition).
 
 ---
 
 ## **Lisensi**
+
 Proyek ini dilisensikan di bawah [MIT License](LICENSE).
 
 ---
 
-Dengan README ini, Anda dapat dengan mudah memahami, menginstal, dan menggunakan aplikasi Face Recognition API. Selamat mencoba! 
-
-## Pengenalan Wajah API
-
-Aplikasi ini adalah API pengenalan wajah yang dibangun menggunakan Flask dan dapat di-deploy menggunakan Docker.
-
-## Persyaratan
-- Python 3.9
-- Docker
-- Docker Compose
-
-## Instalasi
-1. Clone repositori ini:
-   ```bash
-   git clone <URL_REPOSITORI>
-   cd face-recognition-gpu
-   ```
-2. Bangun dan jalankan kontainer:
-   ```bash
-   docker-compose up -d
-   ```
-3. Akses API di `http://localhost:5000`
-
-## Penggunaan
-- **Registrasi Wajah**: Kirim gambar wajah ke endpoint `/register` menggunakan metode POST.
-- **Pengenalan Wajah**: Kirim gambar ke endpoint `/recognize` untuk mengenali wajah.
-
-## Catatan
-- Aplikasi ini menggunakan Gunicorn sebagai server WSGI untuk produksi.
-- Pastikan untuk menggunakan server produksi untuk aplikasi yang di-deploy.
